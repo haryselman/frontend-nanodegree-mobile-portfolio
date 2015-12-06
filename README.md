@@ -42,3 +42,4 @@ See comments in code for all changes I made to main.js
 - Changed some values to not have that many pizza's on the screen as there is less painting needed. Painting is currectly the bottleneck
 - Reordered some var's to not be included in the loops which caused Jank
 - Implemented requestAnimationFrame
+- Reduced time to resize pizza's to aprox. 0.5ms
