@@ -484,7 +484,8 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
-for (var i = 2; i < 100; i++) {
+// Reduced the number of pizza's to 15. 100 were a bit too many pizza options ;)
+for (var i = 2; i < 15; i++) {
     var pizzasDiv = document.getElementById("randomPizzas");
     pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
@@ -563,7 +564,7 @@ document.addEventListener('DOMContentLoaded', window.requestAnimationFrame(funct
     // Increased the spacing to 500
     var s = 500;
     // Reduced the number of colums to 5 as I increased the spacing
-    var cols = 5;
+    var cols = 4;
     // Updated the number of pizza to 30 instead of 200 as I also decreased the number of pizza's that needed to be painted on each frame
     // These pizza's scrolling left and right are annoying anyways, less is better in this case :)
     for (var i = 0; i < 30; i++) {
