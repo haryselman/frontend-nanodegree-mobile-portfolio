@@ -1,5 +1,16 @@
 ## Website Performance Optimization portfolio project
 
+###Updates after first review:
+src/views/js/main.js
+-Implemented "use strict" in global scope and had to declare var newWidth for pizza resizing
+-updated queries with document.getElementById() || document.getElementsByClassName() on multiple places to improve performance
+-Placed array length outside of the scope of the for loops
+-Placed creating of var's outside the scope of the for loops to no recreate the varables on every iteration
+-Restored numbers for var cols = 8; and var s = 256;
+
+src/views/css/style.css
+-Replaced z-index with transform: translateZ(0); and used prefixes if needed for specific browsers
+
 ###How to run the project
 For this project I made use of Grunt & node and npm packages. They were used to automate image optimisation & minifying html, js & css.
 I created a src folder which includes al the source folders and files. To review the project source files please check the src folder. Documents included comments on changes made to the files.

@@ -15,6 +15,7 @@
  Cameron Pittman, Udacity Course Developer
  cameron *at* udacity *dot* com
  */
+"use strict";
 
 // As you may have realized, this website randomly generates pizzas.
 // Here are arrays of all possible pizza ingredients.
@@ -424,7 +425,8 @@ var resizePizzas = function(size) {
     // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
     function determineDx (elem, size) {
         var oldWidth = elem.offsetWidth;
-        var windowWidth = document.querySelector("#randomPizzas").offsetWidth;
+        // used document.getElementById() to improve query performance
+        var windowWidth = document.getElementById("randomPizzas").offsetWidth;
         var oldSize = oldWidth / windowWidth;
 
         // TODO: change to 3 sizes? no more xl?
@@ -450,6 +452,7 @@ var resizePizzas = function(size) {
 
     //Iterates through pizza elements on the page and changes their widths
     //Fixed the Forced Synchhronous Layout issue when resizing the pizza. The solution was already made during the Browser Rendering Optimisation Course
+    var newWidth;
     function changePizzaSizes(size) {
         switch(size) {
             case "1":
@@ -465,9 +468,11 @@ var resizePizzas = function(size) {
                 console.log("bug in sizeSwitcher");
         }
 
-        var randomPizzas = document.querySelectorAll(".randomPizzaContainer");
-
-        for (var i = 0; i < randomPizzas.length; i++) {
+        // used document.getElementsByClassName() to improve query performance
+        var randomPizzas = document.getElementsByClassName("randomPizzaContainer");
+        // Declared var randomPizzaLength outside for loop
+        var randomPizzaLength = randomPizzas.length;
+        for (var i = 0; i < randomPizzaLength; i++) {
             randomPizzas[i].style.width = newWidth + "%";
         }
     }
@@ -485,8 +490,9 @@ window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
 // Reduced the number of pizza's to 15. 100 were a bit too many pizza options ;)
+// Declared var pizzasDiv outside for loop
+var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; i < 15; i++) {
-    var pizzasDiv = document.getElementById("randomPizzas");
     pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
@@ -538,8 +544,12 @@ function updatePositions() {
     window.performance.mark("mark_start_frame");
     // Created calculatedScroll variable outside the for loop, otherwise it would be calculated each iteration which is not needed
     window.calculatedScroll = window.latestKnownScrollY / 1250;
-    for (var i = 0; i < items.length; i++) {
-        var phase = Math.sin(window.calculatedScroll + (i % 5));
+    // Declared array length of items outside the for loop
+    var itemsLength = items.length;
+    // Declared var phase outside the scope of the var loop
+    var phase;
+    for (var i = 0; i < itemsLength; i++) {
+        phase = Math.sin(window.calculatedScroll + (i % 5));
         items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
     }
 
@@ -557,18 +567,24 @@ function updatePositions() {
 
 // Created a separate selectedPizzas variable outside the for loop inside the DOMConternLoaded Event listener below
 // Else the selector would run many times while only needed once.
-var selectedPizzas = document.querySelector("#movingPizzas1");
+// Used document.getElementById() to improve query performance
+var selectedPizzas = document.getElementById("movingPizzas1");
+
+var screenWidth = window.innerWidth;
+console.log(screenWidth);
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', window.requestAnimationFrame(function() {
     // Increased the spacing to 500
-    var s = 500;
+    var s = 256;
     // Reduced the number of colums to 5 as I increased the spacing
-    var cols = 4;
+    var cols = 8;
     // Updated the number of pizza to 30 instead of 200 as I also decreased the number of pizza's that needed to be painted on each frame
     // These pizza's scrolling left and right are annoying anyways, less is better in this case :)
-    for (var i = 0; i < 30; i++) {
-        var elem = document.createElement('img');
+    // Place creation of elem var outside the for loop
+    var elem;
+    for (var i = 0; i < 50; i++) {
+        elem = document.createElement('img');
         elem.className = 'mover';
         elem.src = "images/pizza-100_small_1x.png";
         elem.style.height = "100px";
@@ -579,6 +595,7 @@ document.addEventListener('DOMContentLoaded', window.requestAnimationFrame(funct
     }
 
     //items variable was declared as global variable. Instead I added the var items under the Window Object
-    window.items = document.querySelectorAll('.mover');
+    //Used document.getElementsByClassName() to improve query performance
+    window.items = document.getElementsByClassName('mover');
     window.requestAnimationFrame(updatePositions);
 }));
