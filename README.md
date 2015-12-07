@@ -1,5 +1,9 @@
 ## Website Performance Optimization portfolio project
 
+###Updates after second review:
+src/views/css/style.css
+-restored z-index 
+
 ###Updates after first review:
 src/views/js/main.js
 -Implemented "use strict" in global scope and had to declare var newWidth for pizza resizing
